@@ -1,9 +1,6 @@
 package com.example.librarymanagmentapp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,7 +33,7 @@ public class Book extends BaseEntity {
     private Account account;
     @Enumerated(EnumType.STRING)
     private BookStatus bookStatus;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -45,4 +42,5 @@ public class Book extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "rack_books")
     private Rack rack;
+
 }

@@ -2,19 +2,25 @@ package com.example.librarymanagmentapp.service.serviceImplementation;
 
 import com.example.librarymanagmentapp.exception.ResourceNotFoundException;
 import com.example.librarymanagmentapp.model.Book;
+import com.example.librarymanagmentapp.model.BookFormat;
 import com.example.librarymanagmentapp.repository.BookRepository;
 import com.example.librarymanagmentapp.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Scanner;
+import java.util.Locale;
 import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class BookJpaService implements BookService {
     private final BookRepository bookRepository;
+    private String removeSpace(String spacedString){
+        String trimString = spacedString.trim();
+        String removeSpaces = trimString.replaceAll("\\s+","");
+        return removeSpaces;
+    }
     @Override
     public Book saveBook(Book book) {
         return bookRepository.save(book);
@@ -32,17 +38,22 @@ public class BookJpaService implements BookService {
 
     @Override
     public Book findBySubject(String subject) {
-        return bookRepository.findBookBySubject(subject);
+        String subjectToLowerCase = subject.toLowerCase();
+        return bookRepository.findBookBySubject(removeSpace(subjectToLowerCase));
     }
-
+       // **problems with book format enums posting and retrieving
+    // **search how to make string be enums
     @Override
     public Book findByFormat(String format) {
-        return bookRepository.findBookByBookFormat(format);
+        String formatToLowerCase = format.toUpperCase();
+        return bookRepository.findBookByBookFormat(removeSpace(formatToLowerCase));
     }
-
+        // Work with author first and last name and other author fields
+        // be explicit about it
     @Override
     public Book FindBookByAuthor(String author) {
-        return bookRepository.findBookByAuthorsIgnoreCase(author);
+        String authorToLowerCase = author.toLowerCase();
+        return bookRepository.findBookByAuthors(removeSpace(authorToLowerCase));
     }
 
     @Override
@@ -52,7 +63,7 @@ public class BookJpaService implements BookService {
 
     @Override
     public Book findBookByIsbn(String isbn) {
-        return bookRepository.findByISBN(isbn);
+        return bookRepository.findBookByIsbnIgnoreCase(isbn);
     }
 
     @Override
@@ -60,22 +71,28 @@ public class BookJpaService implements BookService {
 
         Book existingBook = bookRepository.findById(isbn).orElseThrow(
                 () -> new ResourceNotFoundException("Employee", "id", isbn));
-        existingBook.setAuthors(book.getAuthors());
+        existingBook.setTitle(book.getTitle());
+        existingBook.setPublisher(book.getPublisher());
+        existingBook.setPublicationDate(book.getPublicationDate());
         existingBook.setIsbn(book.getIsbn());
-        existingBook.setBookFormat(book.getBookFormat());
+        existingBook.setNumberOfPages(book.getNumberOfPages());
         existingBook.setLanguage(book.getLanguage());
         existingBook.setSubject(book.getSubject());
-        existingBook.setPublisher(book.getPublisher());
-        existingBook.setTitle(book.getTitle());
-        existingBook.setNumberOfPages(book.getNumberOfPages());
+        existingBook.setBarCode(book.getBarCode());
+        existingBook.setBookFormat(book.getBookFormat());
+        existingBook.setBookItem(book.getBookItem());
+        existingBook.setAccount(book.getAccount());
+        existingBook.setBookStatus(book.getBookStatus());
+        existingBook.setAuthors(book.getAuthors());
+        existingBook.setRack(book.getRack());
         bookRepository.save(existingBook);
         return existingBook;
     }
 
     @Override
     public void DeleteBookByIsbn(String isbn) {
-        Book book= bookRepository.findBookByTitleIgnoreCase(isbn);
-        if(book.getTitle().isEmpty()){
+        Book book= bookRepository.findBookByIsbnIgnoreCase(isbn);
+        if(book.getIsbn().isEmpty()){
             throw new ResourceNotFoundException("Book","title",isbn);
         }
 //        System.out.println("Are you sure you want to delete a book with: " + isbn
