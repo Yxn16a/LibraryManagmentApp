@@ -14,9 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Rack extends BaseEntity{
-    private int number;
+@Table(name = "rack")
+public class Rack extends BaseEntity {
+    private String number;
     private String locationIdentifier;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "library")
-    private Set<BookItem> bookItem = new HashSet<>();
+
+    @OneToMany(mappedBy = "rack")
+    private Set<Book> books = new HashSet<>();
 }

@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name= "members")
 public class Member extends BaseEntity {
+    @Embedded
+    private Person person;
     private LocalDateTime membershipDate;
-    private int totalBooksCheckedOut;
-    @OneToOne(mappedBy = "member")
-    private Account account;
-
+    private String  totalBooksCheckedOut;
+//    @OneToOne(mappedBy = "member")
+//    private User user;
 }

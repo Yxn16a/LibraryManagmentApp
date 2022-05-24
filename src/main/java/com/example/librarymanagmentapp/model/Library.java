@@ -16,10 +16,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name= "library")
 public class Library extends BaseEntity{
-    private String name;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private String Name;
+    @Embedded
     private Address address;
-   @OneToMany(cascade = CascadeType.ALL, mappedBy = "library")
-    private Set<BookItem> bookItem = new HashSet<>();
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "address_id", referencedColumnName = "id")
+//    @Embedded
+//    private Address address;
+//   @OneToMany(cascade = CascadeType.ALL, mappedBy = "library")
+//    private Set<BookItem> bookItem = new HashSet<>();
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -14,14 +15,11 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "author")
+@Table(name="author")
 public class Author extends BaseEntity {
-    private String name;
+    @Embedded
+    private Person person;
     private String description;
-    @ManyToMany
-    @JoinTable(
-            name = "author_books",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Book> books;
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books = new HashSet<>();
 }

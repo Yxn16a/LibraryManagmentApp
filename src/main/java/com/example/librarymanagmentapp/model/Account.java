@@ -14,34 +14,22 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "Account")
-public class Account extends BaseEntity{
-   private String password;
-   @Enumerated(EnumType.STRING)
-   @Column(name ="accountStatus")
-   private AccountStatus accountStatus;
-   @OneToOne(mappedBy = "account")
-   private Person person;
-   @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-   private Set<Book> book = new HashSet<>();
-
-   @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "member_id", referencedColumnName = "id")
-   private Member member;
-
-   @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "librarian_id", referencedColumnName = "id")
-   private Librarian librarian;
-
-
-   public void resetPassWord(String password){
-
-   }
-   public void reserveBook(){
-
-   }
-   public void borrowBook(){
-
-   }
+@Table(name = "Account")
+public class Account extends BaseEntity {
+    @Embedded
+    private Person person;
+    //    @OneToOne(mappedBy = "account")
+//    private User user;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "accountStatus")
+    private AccountStatus accountStatus;
+//      @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+//       private Set<Book> book;
+    //  @OneToOne(cascade = CascadeType.ALL)
+//   @JoinColumn(name = "member_id", referencedColumnName = "id")
+//   private Member member;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "librarian_id", referencedColumnName = "id")
+//    private Librarian librarian;
 
 }

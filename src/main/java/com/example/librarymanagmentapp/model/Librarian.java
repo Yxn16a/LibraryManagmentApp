@@ -16,24 +16,14 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name= "Librarian")
 public class Librarian extends BaseEntity {
-    @ManyToMany
-    @JoinTable(
-            name = "librarian_bookitem",
-            joinColumns = @JoinColumn(name = "librarian_id"),
-            inverseJoinColumns = @JoinColumn(name = "bookitem_id"))
-    private Set<BookItem> bookitem = new HashSet<>();
-    @OneToOne(mappedBy = "librarian")
-    private Account account;
-
-    public boolean addBookItem(Book book) {
-        return true;
-    }
-
-    public boolean blockMember(Account account) {
-        return true;
-    }
-
-    public boolean unblockMember(Account account) {
-        return true;
-    }
+//    @ManyToMany
+//    @JoinTable(
+//            name = "librarian_bookitem",
+//            joinColumns = @JoinColumn(name = "librarian_id"),
+//            inverseJoinColumns = @JoinColumn(name = "bookitem_id"))
+//    private Set<BookItem> bookitem = new HashSet<>();
+//    @OneToOne(mappedBy = "librarian")
+//    private Account account;
+    @Embedded
+    private Person person;
 }

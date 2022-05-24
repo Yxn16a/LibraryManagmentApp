@@ -1,26 +1,17 @@
 package com.example.librarymanagmentapp.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@Getter
-@Setter
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name= "person")
-public class Person extends BaseEntity {
-    private String name;
+@Embeddable
+public class Person {
+    private String firstName;
+    private String lastName;
     private String email;
     private String phone;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private String password;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] picture;
+    @Embedded
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private Account account;
 }

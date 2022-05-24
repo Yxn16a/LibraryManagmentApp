@@ -5,26 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name= "Address")
-public class  Address extends BaseEntity {
-    private String StreetAddress;
+@Embeddable
+public class  Address{
+    private String StreetAddressOne;
+    private String StreetAddressTwo;
     private String City;
     private String state;
     private String zipCode;
     private String Country;
     private String county;
-    @OneToOne(mappedBy = "address")
-    private Person person;
-    @OneToOne(mappedBy = "address")
-    private Library library;
 }
