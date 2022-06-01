@@ -19,10 +19,6 @@ public class Library extends BaseEntity{
     private String Name;
     @Embedded
     private Address address;
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_id", referencedColumnName = "id")
-//    @Embedded
-//    private Address address;
-//   @OneToMany(cascade = CascadeType.ALL, mappedBy = "library")
-//    private Set<BookItem> bookItem = new HashSet<>();
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "library")
+    private Set<Book> books = new HashSet<>();
 }

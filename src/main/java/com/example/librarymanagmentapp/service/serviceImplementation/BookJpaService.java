@@ -2,14 +2,12 @@ package com.example.librarymanagmentapp.service.serviceImplementation;
 
 import com.example.librarymanagmentapp.exception.ResourceNotFoundException;
 import com.example.librarymanagmentapp.model.Book;
-import com.example.librarymanagmentapp.model.BookFormat;
 import com.example.librarymanagmentapp.repository.BookRepository;
 import com.example.librarymanagmentapp.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -81,7 +79,6 @@ public class BookJpaService implements BookService {
         existingBook.setBarCode(book.getBarCode());
         existingBook.setBookFormat(book.getBookFormat());
         existingBook.setBookItem(book.getBookItem());
-        existingBook.setAccount(book.getAccount());
         existingBook.setBookStatus(book.getBookStatus());
         existingBook.setAuthors(book.getAuthors());
         existingBook.setRack(book.getRack());
@@ -91,9 +88,12 @@ public class BookJpaService implements BookService {
 
     @Override
     public void DeleteBookByIsbn(String isbn) {
+
         Book book= bookRepository.findBookByIsbnIgnoreCase(isbn);
-        if(book.getIsbn().isEmpty()){
-            throw new ResourceNotFoundException("Book","title",isbn);
+        if(book == null){
+            throw new ResourceNotFoundException("Book","isbn",isbn);
+        }else{
+            bookRepository.delete(book);
         }
 //        System.out.println("Are you sure you want to delete a book with: " + isbn
 //        because this action can not be undone);
@@ -102,7 +102,6 @@ public class BookJpaService implements BookService {
 //        if(delete =="Ok"){
 //            bookRepository.delete(book);
 //        }
-        bookRepository.delete(book);
     }
 
 }

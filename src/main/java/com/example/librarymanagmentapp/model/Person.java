@@ -1,17 +1,23 @@
 package com.example.librarymanagmentapp.model;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String password;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
-    @Embedded
-    private Address address;
+    private String firstName;
+    private String lastName;
+    private String email; //TODO Validate email
+    private String phoneNumber;
+    private String password;
 }

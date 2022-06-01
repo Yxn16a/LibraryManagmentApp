@@ -5,19 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-
+@Entity
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="author")
-public class Author extends BaseEntity {
+@Table(name = "employee_type")
+public class EmployeeType extends BaseEntity {
     private String description;
-    @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
+    private String details;
 }
